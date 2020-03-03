@@ -68,6 +68,38 @@ namespace ADObasic
                 MessageBox.Show(exception.Message);
             }
         }
+
+        private void ShowButton_Click(object sender, EventArgs e)
+        {
+            Show();
+        }
+        private void Show()
+        {
+            try
+            {
+                string connectionString = @"Server=MDSHAHADAT; Database= StudentDB; Integrated Security= True;";
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+                string commandString = @"Select * from Departments";
+                SqlCommand sqlCommand = new SqlCommand(commandString);
+
+                sqlCommand.Connection = sqlConnection;
+
+                sqlConnection.Open();
+                SqlDataReader dataReader = sqlCommand.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    DataTable dataTable = new DataTable();
+                    dataTable.Load(dataReader);
+                    displayDataGridView.DataSource = dataTable;
+                }
+                else MessageBox.Show("No data found!!");
+                sqlConnection.Close();
+            }catch(Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
         //private void Insert()
         //{
         //    try
