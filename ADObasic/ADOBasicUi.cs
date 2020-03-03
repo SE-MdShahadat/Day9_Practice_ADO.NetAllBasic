@@ -13,6 +13,11 @@ namespace ADObasic
 {
     public partial class ADOBasicUi : Form
     {
+        class Department
+        {
+            public string Code { get; set; }
+            public string Name { get; set; }
+        }
         public ADOBasicUi()
         {
             InitializeComponent();
@@ -20,11 +25,15 @@ namespace ADObasic
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            string code = codeTextBox.Text;
-            string name = nameTextBox.Text;
-            Insert(code,name);
+            //string code = codeTextBox.Text;
+            //string name = nameTextBox.Text;
+            //Insert(code,name);
+            Department department = new Department();
+            department.Code = codeTextBox.Text;
+            department.Name = nameTextBox.Text;
+            Insert(department);
         }
-        private void Insert(string code, string name)
+        private void Insert(Department department)
         {
             try
             {
@@ -33,7 +42,8 @@ namespace ADObasic
                 sqlConnection.ConnectionString = connectionString;
 
                 SqlCommand sqlCommand = new SqlCommand();
-                string commandString = @"Insert Into Departments (Code, Name) Values ('"+code+"', '"+name+"')";
+                //string commandString = @"Insert Into Departments (Code, Name) Values ('"+code+"', '"+name+"')";
+                string commandString = @"Insert Into Departments (Code, Name) Values ('"+department.Code+"', '"+department.Name+"')";
                 sqlCommand.CommandText = commandString;
 
                 sqlCommand.Connection = sqlConnection;
